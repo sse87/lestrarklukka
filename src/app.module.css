@@ -1,0 +1,22 @@
+
+.hidden {
+  visibility: hidden;
+}
+
+.clock {
+  font-size: 72px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.buttonNav {
+  display: flex;
+  margin: 50px 0;
+  justify-content: space-evenly;
+}
+
+.button {
+  display: inline;
+  font-size: 24px;
+  padding: 16px 20px;
+}
