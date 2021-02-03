@@ -78,8 +78,10 @@ const App = () => {
               <button
                 className={styles.button}
                 onClick={() => {
-                  setStopwatch(0);
-                  setTimer(initialTimer);
+                  if (window.confirm('Ertu viss um að endurstilla?')) {
+                    setStopwatch(0);
+                    setTimer(initialTimer);
+                  }
                 }}
               >
                 Endurstilla
