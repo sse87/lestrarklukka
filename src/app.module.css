@@ -1,4 +1,9 @@
 
+.appWrapper {
+  border: 10px solid transparent;
+  height: 100vh;
+}
+
 .hidden {
   visibility: hidden;
 }
@@ -19,4 +24,14 @@
   display: inline;
   font-size: 24px;
   padding: 16px 20px;
+}
+
+.bgAlarm {
+  background-color: white;
+  animation: siren infinite 3s linear;
+}
+@keyframes siren {
+  0% {background-color: white;}
+  50% {background-color: red;}
+  100% {background-color: white;}
 }
