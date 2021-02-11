@@ -13,15 +13,16 @@ enum alarmStates {
 
 const App: React.FC = () => {
   const [initialTimer, setInitialTimer] = useState(INITIAL_COUNT_DOWN_TIME);
-  const [stopwatch, setStopwatch] = useState(0);
-  const [timer, setTimer] = useState(INITIAL_COUNT_DOWN_TIME);
-  const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
+  const [stopwatch, setStopwatch] = useState(0);
+  const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
   useInterval(
     () => setStopwatch((state) => state + 1),
     isStopwatchRunning ? 1000 : null
   );
+
+  const [timer, setTimer] = useState(INITIAL_COUNT_DOWN_TIME);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
   useInterval(
     () => setTimer((state) => state - 1),
     isTimerRunning ? 1000 : null
@@ -49,6 +50,19 @@ const App: React.FC = () => {
     }
   }, [isAlarmOn, timer]);
 
+  const startStopwatch = () => {
+    setIsStopwatchRunning(true);
+  };
+  const stopStopwatch = () => {
+    setIsStopwatchRunning((state) => !state);
+  };
+  const startTimer = () => {
+    setIsTimerRunning(true);
+  };
+  const stopTimer = () => {
+    setIsTimerRunning(false);
+  };
+
   return (
     <div
       className={`${styles.appWrapper} ${
@@ -61,7 +75,7 @@ const App: React.FC = () => {
             styles.button +
             (isStopwatchRunning && !isTimerRunning ? '' : ` ${styles.hidden}`)
           }
-          onClick={() => setIsStopwatchRunning((state) => !state)}
+          onClick={() => stopStopwatch()}
         >
           Taka stóra pásu
         </button>
@@ -79,18 +93,12 @@ const App: React.FC = () => {
 
       <div className={styles.buttonNav}>
         {isStopwatchRunning && isTimerRunning && (
-          <button
-            className={styles.button}
-            onClick={() => setIsTimerRunning(false)}
-          >
+          <button className={styles.button} onClick={() => stopTimer()}>
             Pása
           </button>
         )}
         {isStopwatchRunning && !isTimerRunning && (
-          <button
-            className={styles.button}
-            onClick={() => setIsTimerRunning((state) => !state)}
-          >
+          <button className={styles.button} onClick={() => startTimer()}>
             Halda áfram
           </button>
         )}
@@ -99,8 +107,8 @@ const App: React.FC = () => {
             <button
               className={styles.button}
               onClick={() => {
-                setIsStopwatchRunning(true);
-                setIsTimerRunning(true);
+                startStopwatch();
+                startTimer();
               }}
             >
               Byrja að lesa
@@ -109,13 +117,13 @@ const App: React.FC = () => {
               <button
                 className={styles.button}
                 onClick={() => {
-                  if (window.confirm('Ertu viss um að endurstilla?')) {
+                  if (window.confirm('Ertu viss um að núllstilla?')) {
                     setStopwatch(0);
                     setTimer(initialTimer);
                   }
                 }}
               >
-                Endurstilla
+                Núllstilla
               </button>
             )}
           </>
